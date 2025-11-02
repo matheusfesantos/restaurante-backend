@@ -6,8 +6,10 @@ import com.projeto.projeto_restaurante.dto.RegisterDTO;
 import com.projeto.projeto_restaurante.entity.Usuarios;
 import com.projeto.projeto_restaurante.infra.security.TokenService;
 import com.projeto.projeto_restaurante.repositories.UsuariosRepository;
+import com.projeto.projeto_restaurante.services.RegisterService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,7 +28,7 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UsuariosRepository usuariosRepository;
+    private RegisterService registerService;
 
     @Autowired
     private TokenService tokenService;
@@ -34,7 +36,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
+        var auth = authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((Usuarios) auth.getPrincipal());
 
@@ -42,14 +44,17 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if(this.usuariosRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data){
+        try {
+            if (registerService.existByEmail(data.email())){
+                return new ResponseEntity<String>("Email já está cadastrado", HttpStatus.BAD_REQUEST);
+            }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
-        Usuarios newUsuario = new Usuarios(data.nome(), data.email(), encryptedPassword);
+            String mensagem = registerService.save(data);
+            return new ResponseEntity<String>(mensagem, HttpStatus.OK);
 
-        this.usuariosRepository.save(newUsuario);
-
-        return ResponseEntity.ok().build();
+        } catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

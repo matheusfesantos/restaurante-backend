@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -15,12 +16,23 @@ import java.util.List;
 public class Usuarios implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String nome;
-    private String username;
+    private String email;
     @JsonIgnore
     private String senha;
+
+    public Usuarios(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Usuarios() {
+
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -30,6 +42,11 @@ public class Usuarios implements UserDetails {
     @Override
     public String getPassword() {
         return senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override

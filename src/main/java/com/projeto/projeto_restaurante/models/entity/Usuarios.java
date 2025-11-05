@@ -1,4 +1,4 @@
-package com.projeto.projeto_restaurante.entity;
+package com.projeto.projeto_restaurante.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -20,18 +20,9 @@ public class Usuarios implements UserDetails {
     private UUID id;
     private String nome;
     private String email;
+
     @JsonIgnore
     private String senha;
-
-    public Usuarios(String nome, String email, String senha) {
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-    }
-
-    public Usuarios() {
-
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

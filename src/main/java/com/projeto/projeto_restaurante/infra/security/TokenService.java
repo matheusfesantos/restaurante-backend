@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.projeto.projeto_restaurante.entity.Usuarios;
+import com.projeto.projeto_restaurante.models.entity.Usuarios;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +43,12 @@ public class TokenService {
             return "";
         }
     }
+
+    public String getSubject(String token){
+        return JWT.decode(token).getSubject();
+    }
+
+    // Criar na service de usuário uma forma de buscar o id do usuário pelo email que foi descriptografado aqui
 
     private Instant genExpirationDate(){
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));

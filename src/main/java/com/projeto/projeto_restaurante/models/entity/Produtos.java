@@ -1,4 +1,4 @@
-package com.projeto.projeto_restaurante.entity;
+package com.projeto.projeto_restaurante.models.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

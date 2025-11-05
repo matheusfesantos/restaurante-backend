@@ -1,6 +1,6 @@
 package com.projeto.projeto_restaurante.repositories;
 
-import com.projeto.projeto_restaurante.entity.Usuarios;
+import com.projeto.projeto_restaurante.models.entity.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 

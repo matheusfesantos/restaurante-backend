@@ -18,7 +18,4 @@ public class Produtos {
     private String nome;
     private Double preco;
     private String foto;
-
-    public Produtos(String nome, Double preco, String foto) {
-    }
 }

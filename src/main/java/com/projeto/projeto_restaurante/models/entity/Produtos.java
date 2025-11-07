@@ -1,9 +1,13 @@
-package com.projeto.projeto_restaurante.entity;
+package com.projeto.projeto_restaurante.models.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "produtos")
 public class Produtos {
@@ -15,4 +19,6 @@ public class Produtos {
     private Double preco;
     private String foto;
 
+    public Produtos(String nome, Double preco, String foto) {
+    }
 }

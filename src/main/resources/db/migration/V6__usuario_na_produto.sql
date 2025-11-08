@@ -4,5 +4,5 @@ ALTER TABLE produtos
 ALTER TABLE produtos
     ADD CONSTRAINT fk_produtos_usuario
         FOREIGN KEY (usuario_id)
-            REFERENCES users(id)
+            REFERENCES usuarios(id)
             ON DELETE CASCADE;

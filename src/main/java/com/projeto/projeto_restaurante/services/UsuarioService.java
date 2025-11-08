@@ -21,15 +21,10 @@ public class UsuarioService {
         this.tokenService = tokenService;
     }
 
-    public UUID recuperarUUIDporToken(String token){
+    public UUID recuperarUUIDporToken(String authorizationHeader){
         try{
-            boolean valido = Boolean.parseBoolean(tokenService.validateToken(token));
-
-            if (!valido){
-                throw new IllegalAccessException("Token fornecido não é valido!");
-            }
-
-            String email = tokenService.validateToken(token);
+            String token = authorizationHeader.replace("Bearer ", "");
+            String email = tokenService.getSubject(token);
 
             Usuarios usuarios = repository.findUsuarioByEmail(email);
 

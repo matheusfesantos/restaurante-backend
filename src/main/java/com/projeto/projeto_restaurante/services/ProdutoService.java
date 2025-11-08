@@ -2,20 +2,28 @@ package com.projeto.projeto_restaurante.services;
 
 import com.projeto.projeto_restaurante.models.dto.ProdutoDTO;
 import com.projeto.projeto_restaurante.models.entity.Produtos;
+import com.projeto.projeto_restaurante.models.entity.Usuarios;
 import com.projeto.projeto_restaurante.repositories.ProdutosRepository;
+import com.projeto.projeto_restaurante.repositories.UsuariosRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
 public class ProdutoService {
 
-    @Autowired
-    private ProdutosRepository repository;
+    private final ProdutosRepository repository;
+    private final UsuariosRepository usuariosRepository;
+
+    public ProdutoService(ProdutosRepository repository, UsuariosRepository usuariosRepository) {
+        this.repository = repository;
+        this.usuariosRepository = usuariosRepository;
+    }
 
     /**
      * Retrieves a list of all products from the repository.
@@ -28,12 +36,16 @@ public class ProdutoService {
     }
 
     /**
-     * Persists a product in the repository based on the information provided in the {@code AdicionarProdutoDTO}.
+     * Saves a product based on the details provided in the {@code ProdutoDTO} and associates
+     * it with a user identified by the given {@code id}.
+     * If the user with the specified {@code id} is not found, an {@code EntityNotFoundException} is thrown.
+     * Logs information and errors at various stages of the saving process.
      *
-     * @param dto the data transfer object containing the product's details, including its name, photo, and price
+     * @param dto the product data transfer object containing details such as name, photo, and price
+     * @param id the unique identifier of the user to associate the product with
      * @return {@code true} if the product was successfully saved, {@code false} otherwise
      */
-    public boolean save(ProdutoDTO dto){
+    public boolean save(ProdutoDTO dto, UUID id){
         try{
             Produtos novoProduto = new Produtos();
 
@@ -42,6 +54,10 @@ public class ProdutoService {
             novoProduto.setFoto(dto.foto());
             novoProduto.setPreco(dto.preco());
 
+            Usuarios usuario = usuariosRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("UUID: " + id+ ", não pertence a nenhum usuario"));
+
+            novoProduto.setUsuarioId(usuario.getId());
             repository.save(novoProduto);
             log.info("Produto salvo com sucesso!");
             return true;

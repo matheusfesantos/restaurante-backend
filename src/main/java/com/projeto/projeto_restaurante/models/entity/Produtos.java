@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +20,7 @@ public class Produtos {
     private String nome;
     private Double preco;
     private String foto;
+
+    @Column(name = "usuario_id")
+    private UUID usuarioId;
 }

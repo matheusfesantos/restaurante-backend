@@ -14,12 +14,12 @@ public class Comentarios {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "produto_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "produto_id")
     private Produtos produto;
 
-    @JoinColumn(name = "usuario_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
     private Usuarios usuario;
 
     private String comentario;

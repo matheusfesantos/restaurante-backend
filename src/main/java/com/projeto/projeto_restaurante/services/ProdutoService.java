@@ -57,7 +57,7 @@ public class ProdutoService {
             Usuarios usuario = usuariosRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException("UUID: " + id+ ", não pertence a nenhum usuario"));
 
-            novoProduto.setUsuarioId(usuario.getId());
+            novoProduto.setUsuario(usuario);
             repository.save(novoProduto);
             log.info("Produto salvo com sucesso!");
             return true;

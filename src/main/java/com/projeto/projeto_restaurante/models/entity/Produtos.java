@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "produtos")
 public class Produtos {
@@ -21,6 +19,7 @@ public class Produtos {
     private Double preco;
     private String foto;
 
-    @Column(name = "usuario_id")
-    private UUID usuarioId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuarios usuario;
 }

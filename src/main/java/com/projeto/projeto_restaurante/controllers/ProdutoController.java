@@ -61,7 +61,7 @@ public class ProdutoController {
     }
 
     @PatchMapping("/atualizar-produto")
-    public ResponseEntity<?> atualizarProduto(@RequestBody ProdutoDTO dto){
+    public ResponseEntity<?> atualizarProduto(@Valid @RequestBody ProdutoDTO dto){
         try {
             boolean update = service.atualizar(dto);
 

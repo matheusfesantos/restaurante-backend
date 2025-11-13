@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "produtos")
 public class Produtos {
@@ -19,6 +19,7 @@ public class Produtos {
     private Double preco;
     private String foto;
 
-    public Produtos(String nome, Double preco, String foto) {
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuarios usuario;
 }

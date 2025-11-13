@@ -1,14 +1,13 @@
 package com.projeto.projeto_restaurante.models.dto;
 
-/**
- * Data Transfer Object (DTO) representing product information.
- * This record is used to encapsulate details about a product such as its photo, name, and price.
- * It is primarily used in service-layer operations where transferring lightweight and essential product
- * data is required, instead of dealing directly with the product entity.
- */
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public record ProdutoDTO(
         String foto,
+        @NotBlank(message = "O nome do produto não pode estar em branco")
         String nome,
+        @NotNull(message = "O preco do produto não pode ser nulo")
         Double preco
 ){
 }

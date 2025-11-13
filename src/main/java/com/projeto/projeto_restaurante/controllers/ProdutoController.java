@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("api/produtos")
 public class ProdutoController {
 
     private final ProdutoService service;
@@ -33,7 +33,7 @@ public class ProdutoController {
         return service.findAll();
     }
 
-    @PostMapping("/cadastrar-produto")
+    @PostMapping("/cadastrar")
     public ResponseEntity<?> salvarProduto(@Valid @NotNull @RequestBody ProdutoDTO dto,
                                            @RequestHeader("Authorization") String token){
         try {
@@ -60,10 +60,10 @@ public class ProdutoController {
         }
     }
 
-    @PatchMapping("/atualizar-produto")
-    public ResponseEntity<?> atualizarProduto(@RequestBody ProdutoDTO dto){
+    @PatchMapping("/atualizar/{id}")
+    public ResponseEntity<?> atualizarProduto(@Valid @RequestBody ProdutoDTO dto, @PathVariable Long id){
         try {
-            boolean update = service.atualizar(dto);
+            boolean update = service.atualizar(dto, id);
 
             if (update){
                 log.info("Produto atualizado com sucesso");
@@ -83,7 +83,7 @@ public class ProdutoController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<?> deletarProduto(@PathVariable Long id){
         try{
             boolean delete = service.delete(id);

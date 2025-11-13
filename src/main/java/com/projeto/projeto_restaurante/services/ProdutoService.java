@@ -57,7 +57,7 @@ public class ProdutoService {
             Usuarios usuario = usuariosRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException("UUID: " + id+ ", não pertence a nenhum usuario"));
 
-            novoProduto.setUsuarioId(usuario.getId());
+            novoProduto.setUsuario(usuario);
             repository.save(novoProduto);
             log.info("Produto salvo com sucesso!");
             return true;
@@ -75,9 +75,10 @@ public class ProdutoService {
      * @param dto the data transfer object containing product details to be updated, such as name, price, and photo
      * @return {@code true} if the product was successfully updated, or an exception is thrown otherwise
      */
-    public boolean atualizar(ProdutoDTO dto){
+    public boolean atualizar(ProdutoDTO dto, Long id){
         try{
-            Produtos produtoAtualizado = new Produtos();
+            Produtos produtoAtualizado = repository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("O Produto informado não existe"));
 
             if (dto.nome() != null){
                 log.info("Atualizando nome do produto de {} para {}",produtoAtualizado.getNome(), dto.nome());
@@ -94,6 +95,7 @@ public class ProdutoService {
                 produtoAtualizado.setFoto(dto.foto());
             }
 
+            repository.save(produtoAtualizado);
             return true;
 
         }

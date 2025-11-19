@@ -22,7 +22,7 @@ jobs:
           cache: 'maven'
 
       - name: Executar o Maven sem testes
-        run: mvn clean package -DskipTests=true
+        run: mvn clean package
 
       - name: Upload do Arquivo
         uses: actions/upload-artifact@v4

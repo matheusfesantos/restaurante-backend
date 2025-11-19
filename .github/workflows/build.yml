@@ -21,7 +21,7 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Executar o Maven sem testes
+      - name: Executar o Maven com testes
         run: mvn clean package -DskipTests=true
 
       - name: Upload do Arquivo

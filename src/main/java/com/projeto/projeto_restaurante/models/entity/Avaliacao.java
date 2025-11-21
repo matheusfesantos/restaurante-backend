@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "avaliacao")
+@Table(name = "avaliacoes")
 public class Avaliacao {
 
     @Id
@@ -24,6 +24,7 @@ public class Avaliacao {
 
     private Integer nota;
 
+    @Column(name = "data_avaliacao")
     private LocalDate data;
 
     @PrePersist

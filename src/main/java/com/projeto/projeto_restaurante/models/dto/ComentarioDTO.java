@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record ComentarioDTO (
         @NotNull (message = "O Id do produto não pode ser nulo")
-        Long produto_id,
+        Long produtoId,
         @NotBlank (message = "O comentario não pode estar em branco")
         String comentario
 )

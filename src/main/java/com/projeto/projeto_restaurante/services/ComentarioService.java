@@ -51,7 +51,7 @@ public class ComentarioService {
     public ComentarioResponseDTO save(ComentarioDTO dto, UUID usuario_id) {
             Comentarios comentario = new Comentarios();
 
-            Produtos produto = produtosRepository.findById(dto.produto_id())
+            Produtos produto = produtosRepository.findById(dto.produtoId())
                     .orElseThrow(() -> new EntityNotFoundException("O usuário não existe"));
 
             Usuarios usuario = usuariosRepository.findById(usuario_id)

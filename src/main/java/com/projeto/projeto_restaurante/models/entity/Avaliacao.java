@@ -1,5 +1,6 @@
 package com.projeto.projeto_restaurante.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 

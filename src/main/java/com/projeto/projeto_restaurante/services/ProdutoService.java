@@ -35,6 +35,12 @@ public class ProdutoService {
         return repository.findAll();
     }
 
+    public Produtos findById(Long produtoId){
+
+        return repository.findById(produtoId)
+                .orElseThrow(() -> new EntityNotFoundException("Produto informado não esta no nosso banco de dados"));
+    }
+
     /**
      * Saves a product based on the details provided in the {@code ProdutoDTO} and associates
      * it with a user identified by the given {@code id}.

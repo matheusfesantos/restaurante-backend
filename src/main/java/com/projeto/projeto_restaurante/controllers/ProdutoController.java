@@ -33,6 +33,11 @@ public class ProdutoController {
         return service.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        return ResponseEntity.ok(service.findById(id));
+    }
+
     @PostMapping("/cadastrar")
     public ResponseEntity<?> salvarProduto(@Valid @NotNull @RequestBody ProdutoDTO dto,
                                            @RequestHeader("Authorization") String token){
